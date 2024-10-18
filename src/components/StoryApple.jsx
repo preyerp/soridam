@@ -256,9 +256,8 @@ const StoryApple = () => {
                     rotation={{ x: 0, y: 0, z: 0 }}
                 />
 
-                {/* 카메라 엔티티 */}
-                <Entity camera position="0 0 2">
-                    {/* look-controls 컴포넌트를 제거하여 시점을 고정 */}
+                <Entity camera position="0 0 2" look-controls="enabled: false">
+                    {/* look-controls 컴포넌트를 비활성화하여 시점을 고정 */}
                     <Entity position="0 0 0" rotation="0 0 0" />
                 </Entity>
 
