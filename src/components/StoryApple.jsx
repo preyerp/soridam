@@ -185,6 +185,7 @@ const StoryApple = () => {
                 exposure: 0.2"
                 reflection="directionalLight: #sun;"
                 xr-mode-ui="enabled: false"
+                vr-mode-ui="enabled: false"  // VR 모드 UI 비활성화
                 device-orientation-permission-ui="enabled: false"
             >
 
@@ -256,10 +257,15 @@ const StoryApple = () => {
                     rotation={{ x: 0, y: 0, z: 0 }}
                 />
 
-                <Entity camera position="0 0 2" look-controls="enabled: false">
-                    {/* look-controls 컴포넌트를 비활성화하여 시점을 고정 */}
+                <Entity
+                    camera
+                    position="0 0 2"
+                    look-controls="enabled: false; touchEnabled: false; magicWindowTrackingEnabled: false"  // 터치 및 자이로스코프 비활성화
+                    wasd-controls="enabled: false"  // 키보드 이동 비활성화
+                >
                     <Entity position="0 0 0" rotation="0 0 0" />
                 </Entity>
+
 
                 <Entity primitive="a-sky" color="#010422" />
             </Scene>
