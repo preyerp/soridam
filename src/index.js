@@ -15,7 +15,6 @@ import SpeechRecognitionComponent from './components/SpeechRecognitionComponent'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-serviceWorkerRegistration.register();
 root.render(
 
   <BrowserRouter basename={process.env.PUBLIC_URL}>
@@ -33,4 +32,7 @@ root.render(
 
   </BrowserRouter>
 );
+
+// 서비스 워커 등록
+serviceWorkerRegistration.register();
 
