@@ -150,17 +150,6 @@ const StoryApple = () => {
         }
     }, [modelsLoaded]);
 
-    useEffect(() => {
-        // aframe에서 카메라 로드 후 deviceorientation 이벤트 제거
-        const scene = document.querySelector('a-scene');
-        const camera = scene.querySelector('[camera]');
-
-        if (camera && camera.components && camera.components['look-controls']) {
-            const lookControlsInstance = camera.components['look-controls'];
-            window.removeEventListener('deviceorientation', AFRAME.utils.bind(lookControlsInstance, lookControlsInstance.onDeviceOrientationChange));
-        }
-    }, []);
-    
     // Jump 애니메이션 실행 버튼 핸들러
     const triggerJumpAnimation = () => {
         setPlayJump(true);  // Jump 애니메이션 재생
@@ -271,8 +260,8 @@ const StoryApple = () => {
                 <Entity
                     camera
                     position="0 0 2"
-                    look-controls="enabled: false; touchEnabled: false; magicWindowTrackingEnabled: false"  // 터치 및 자이로스코프 비활성화
-                    wasd-controls="enabled: false"  // 키보드 이동 비활성화
+                    look-controls="enabled: false; touchEnabled: false; magicWindowTrackingEnabled: false; mouseEnabled: false; pointerLockEnabled: false"  // 모든 컨트롤 비활성화
+                    wasd-controls="enabled: false"
                 >
                     <Entity position="0 0 0" rotation="0 0 0" />
                 </Entity>
