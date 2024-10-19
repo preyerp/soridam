@@ -12,8 +12,10 @@ import Scene1 from './components/scene/Scene1';
 import Scene2 from './components/scene/Scene2';
 import SceneBlack from './components/scene/SceneBlack';
 import SpeechRecognitionComponent from './components/SpeechRecognitionComponent';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+serviceWorkerRegistration.register();
 root.render(
 
   <BrowserRouter basename={process.env.PUBLIC_URL}>
