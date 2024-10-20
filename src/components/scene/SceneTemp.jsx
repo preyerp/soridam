@@ -42,7 +42,7 @@ function SceneTemp() {
         <PageWrapper>
             <FlexDiv>
                 <SnowflakeIcon src={`/image/logo_white.png`} />
-                <Toggle txt={"시작하기"} width={"112px"} height={"78px"} onClick={() => { navigate('/scene1'); }}></Toggle>
+                <Toggle txt={"시작하기"} width={"112px"} height={"78px"} onClick={() => { navigate('/sceneA'); }}></Toggle>
             </FlexDiv>
 
         </PageWrapper>

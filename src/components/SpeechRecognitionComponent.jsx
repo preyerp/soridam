@@ -1,13 +1,50 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  align-items: flex-end;
+  width: 210px;
+  height: 50px;
+  overflow: hidden;
+  background-color: black;
+  position: relative;
+`;
+
+// 가이드 선 스타일
+const GuideLine = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: red;
+  top: 50%; /* volumeLevel 50에 해당하는 위치 */
+  z-index: 1;
+  opacity: 0.5;
+`;
+
+const Bar = styled.div`
+  width: 5px;
+  background-color: #FEBB6C;
+  margin: 0 1px;
+`;
 
 const AudioVolumeMeter = () => {
   const [volumeLevel, setVolumeLevel] = useState(0); // 음성 크기 저장
-  const [maxVolumeLevel, setMaxVolumeLevel] = useState(0); // 가장 큰 볼륨 기록
+  const [volumeHistory, setVolumeHistory] = useState(Array(30).fill(0)); // 막대들의 높이 저장
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
   const mediaStreamSourceRef = useRef(null);
   const audioStreamRef = useRef(null);
-  const maxVolumeRef = useRef(0); // 가장 큰 볼륨을 저장하는 ref
+
+  useEffect(() => {
+    if (volumeLevel > 0) {
+      setVolumeHistory((prevHistory) => {
+        const newHistory = [...prevHistory.slice(1), volumeLevel]; // 가장 왼쪽 막대 제거, 오른쪽에 새 막대 추가
+        console.log(newHistory[29])
+        return newHistory;
+      });
+    }
+  }, [volumeLevel]);
 
   const startListening = async () => {
     try {
@@ -36,9 +73,6 @@ const AudioVolumeMeter = () => {
     if (audioStreamRef.current) {
       audioStreamRef.current.getTracks().forEach(track => track.stop());
     }
-
-
-    setMaxVolumeLevel(maxVolumeRef.current); // 가장 큰 볼륨을 화면에 표시
   };
 
   const detectVolume = () => {
@@ -50,10 +84,6 @@ const AudioVolumeMeter = () => {
       const sum = dataArray.reduce((a, b) => a + b, 0);
       const averageVolume = sum / dataArray.length;
       setVolumeLevel(Math.round(averageVolume)); // 음성 크기 저장
-      // 현재 음성 크기가 가장 큰지 확인하고 갱신
-      if (averageVolume > maxVolumeRef.current) {
-        maxVolumeRef.current = Math.round(averageVolume);
-      }
 
       if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
         requestAnimationFrame(checkVolume); // 지속적으로 크기 측정
@@ -69,7 +99,12 @@ const AudioVolumeMeter = () => {
       <button onClick={startListening}>Start Listening</button>
       <button onClick={stopListening}>Stop Listening</button>
       <p>Volume Level: {volumeLevel}</p>
-      <p>Max Volume Level: {maxVolumeLevel}</p> {/* 가장 큰 볼륨 표시 */}
+      <Container>
+        <GuideLine />
+        {volumeHistory.map((level, index) => (
+          <Bar key={index} style={{ height: `${(level / 100) * 100}%` }} />
+        ))}
+      </Container>
     </div>
   );
 };

@@ -13,6 +13,7 @@ import Scene2 from './components/scene/Scene2';
 import SceneBlack from './components/scene/SceneBlack';
 import SpeechRecognitionComponent from './components/SpeechRecognitionComponent';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import SceneA from './page/SceneA';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,8 +22,8 @@ root.render(
 
     <Routes>
       {/* <Route index element={<VoiceInput />} /> */}
-      <Route index element={<StoryApple />} />
-      <Route path="scene1" element={<Scene1 />} />
+      <Route index element={<SceneTemp />} />
+      <Route path="sceneA" element={<SceneA />} />
       <Route path="scene2" element={<Scene2 />} />
       <Route path="sceneblack" element={<SceneBlack />} />
       <Route path="apple" element={<StoryApple />} />

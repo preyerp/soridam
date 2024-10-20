@@ -47,7 +47,7 @@ const Overlay = styled.div`
   text-align: center;
 `;
 
-function Scene1({onVideoEnd}) {
+function Scene1End() {
     const navigate = useNavigate();
     const [showOverlay, setShowOverlay] = useState(true); // 로딩 화면 상태 관리
     const [videoElement, setVideoElement] = useState(null);
@@ -56,30 +56,23 @@ function Scene1({onVideoEnd}) {
         if (videoElement) {
             // 비디오 재생이 완료되면 페이지 이동
             videoElement.onended = () => {
-                onVideoEnd();
+                navigate('/scene2');
             };
         }
     }, [videoElement, navigate]);
 
-    const handleTouch = () => {
-        // 터치 이벤트가 발생하면 로딩 화면을 숨기고 비디오 재생
-        setShowOverlay(false); // 로딩 화면을 숨김
+    useEffect(() => {
         if (videoElement) {
             videoElement.play();  // 비디오 재생 시작
         }
-    };
+    }, [videoElement, navigate]);
 
     return (
         <PageWrapper>
-            {showOverlay && (
-                <Overlay onClick={handleTouch}>
-                    <p>화면을 터치해서 이야기 진행하기</p>
-                </Overlay>
-            )}
 
             <FlexDiv>
                 <Video
-                    src="/video/scene1_intro.mp4"
+                    src="/video/scene1_end.mp4"
                     ref={(video) => setVideoElement(video)}  // 비디오 엘리먼트를 state에 저장
                 />
             </FlexDiv>
@@ -87,4 +80,4 @@ function Scene1({onVideoEnd}) {
     );
 }
 
-export default Scene1;
+export default Scene1End;
